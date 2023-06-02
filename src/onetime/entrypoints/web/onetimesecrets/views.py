@@ -1,5 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("Hello, world. One time secret share screen.")
+    return HttpResponse(render(request, "onetimesecrets/index.html"))
