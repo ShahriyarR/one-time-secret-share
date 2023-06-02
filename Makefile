@@ -64,3 +64,4 @@ run:
 
 
 run-dev:
+	${PYTHON} src/onetime/entrypoints/web/manage.py runserver
