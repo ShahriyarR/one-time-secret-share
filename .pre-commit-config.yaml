@@ -1,0 +1,42 @@
+default_language_version:
+  python: python3.10
+
+default_stages: [commit, push]
+
+repos:
+  - repo: https://github.com/MarcoGorelli/absolufy-imports
+    rev: v0.3.1
+    hooks:
+        - id: absolufy-imports
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8 src
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: black
+        name: black
+        entry: black src tests --check --diff --config pyproject.toml
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: isort
+        name: isort
+        entry: isort src tests --check --diff
+        language: system
+        types: [ python ]
+        pass_filenames: false
+      - id: bandit
+        name: bandit
+        entry: bandit -r src --config pyproject.toml
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: pytype
+        name: pytype
+        entry: pytype --config=pytype.cfg src
+        language: system
+        types: [python]
+        pass_filenames: false

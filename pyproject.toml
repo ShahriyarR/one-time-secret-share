@@ -1,0 +1,65 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "onetime"
+authors = [{name = "Shako Rzayev", email = "rzayev.sehriyar@gmail.com"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+    "Django >= 4.2"
+]
+
+[project.urls]
+Home = "https://github.com/ShahriyarR/one-time-secret-share"
+
+
+[project.optional-dependencies]
+doc = []
+dev = [
+    "black >=23.1.0",
+    "isort >=5.12.0",
+    "autoflake >=1.4",
+    "flake8 >=6.0.0",
+    "pre-commit >=2.21.0",
+    "pytype >= 2022.12.15",
+    "bandit >= 1.7.5",
+    "flake8-bugbear >= 22.12.6",
+    ]
+test = [
+    "pytest ==7.1.3",
+    "pytest-cov == 3.0.0",
+]
+
+
+[tool.isort]
+profile = "black"
+py_version = 310
+skip = [".gitignore", ".dockerignore"]
+extend_skip = [".md", ".json"]
+skip_glob = ["docs/*"]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+
+[tool.bandit]
+skips = ["B311"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration relatively slow (deselect with '-m \"not integration\"')",
+    "serial",
+]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-ra",
+]
+testpaths = "tests"
