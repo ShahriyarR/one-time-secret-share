@@ -12,6 +12,7 @@ dynamic = ["version", "description"]
 dependencies = [
     "Django >= 4.2",
     "readonce >= 1.0.3",
+    "cryptography >= 41.0.1",
 ]
 
 [project.urls]
