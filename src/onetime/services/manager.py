@@ -21,4 +21,4 @@ def generate_and_encrypt_uuid() -> str:
     key = Fernet.generate_key()
     fernet = Fernet(key)
     uuid = fernet.encrypt(bytes(uuid_, encoding="utf-8"))
-    return str(uuid)
+    return uuid.decode()
