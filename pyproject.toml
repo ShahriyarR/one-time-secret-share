@@ -10,7 +10,8 @@ license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 dependencies = [
-    "Django >= 4.2"
+    "Django >= 4.2",
+    "readonce >= 1.0.3",
 ]
 
 [project.urls]
