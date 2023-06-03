@@ -9,3 +9,4 @@ class OnetimesecretsConfig(AppConfig):
 
     def ready(self):
         container.wire(modules=["onetime.entrypoints.web.onetimesecrets.views"])
+
