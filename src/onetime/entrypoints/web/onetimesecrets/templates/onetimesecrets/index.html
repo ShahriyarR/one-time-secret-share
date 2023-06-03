@@ -19,4 +19,15 @@
   </div>
 </form>
 
+<div class="block">
+  <div class="content is-medium">
+    {% if secret_url %}
+    <h2 class="title">Copy the link below and share</h2>
+    <div class="notification is-info">
+      <a href="{{ secret_url }}">{{ secret_url }}</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
 {% endblock %}

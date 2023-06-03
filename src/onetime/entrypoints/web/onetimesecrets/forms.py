@@ -1,7 +1,7 @@
 from django import forms
 
 
-class SecretForm(forms.Form):
+class SecretCreateForm(forms.Form):
     secret = forms.CharField(
         label=False,
         required=True,
