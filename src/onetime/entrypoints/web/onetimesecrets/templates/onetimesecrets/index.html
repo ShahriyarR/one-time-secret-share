@@ -1,12 +1,33 @@
 {% extends 'onetimesecrets/base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Welcome to One Time Secret Manager {% endblock %}</h1>
-<form>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Your Secret goes here</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
+<h1 class="title">{% block title %} Welcome to One Time Secret Share {% endblock %}</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="field">
+    <label class="label">Add your secret and click the button to get unique link</label>
+    <div class="control">
+      {{ form.as_p }}
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-primary is-outlined">Generate Secret Link</button>
+    </div>
+  </div>
 </form>
+
+<div class="block">
+  <div class="content is-medium">
+    {% if secret_url %}
+    <h2 class="title">Copy the link below and share</h2>
+    <div class="notification is-info">
+      <a href="{{ secret_url }}">{{ secret_url }}</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
 {% endblock %}

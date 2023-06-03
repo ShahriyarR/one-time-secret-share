@@ -5,8 +5,10 @@ from onetime.use_cases.manager import SecretAndUrlManager
 
 
 class Container(containers.DeclarativeContainer):
+    config = providers.Configuration()
+
     wiring_config = containers.WiringConfiguration(
-        modules=["onetime.use_cases.manager.py"]
+        modules=["onetime.use_cases.manager"]
     )
 
     secret_manager = providers.Factory(SecretManager)
