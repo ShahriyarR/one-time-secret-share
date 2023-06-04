@@ -1,6 +1,11 @@
+import readonce
 from dependency_injector.wiring import Provide
 
 from onetime.services.manager import SecretManager, generate_and_encrypt_uuid
+from onetime.use_cases.exceptions import (
+    SecretDataWasAlreadyConsumedException,
+    UUIDNotFoundException,
+)
 
 
 class SecretAndUrlManager:
@@ -15,4 +20,11 @@ class SecretAndUrlManager:
         return uuid
 
     def get_secret(self, uuid: str) -> str:
-        return self.uuid_storage[uuid].get_secret()
+        try:
+            return self.uuid_storage[uuid].get_secret()
+        except KeyError as e:
+            raise UUIDNotFoundException("Failed to fetch the provided UUID") from e
+        except readonce.UnsupportedOperationException as e:
+            raise SecretDataWasAlreadyConsumedException(
+                "Secret can not be retrieved twice, it was already consumed"
+            ) from e

@@ -1,10 +1,14 @@
 from dependency_injector.wiring import Provide, inject
-from django.http import HttpResponse
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
 
 from onetime.configurator.containers import Container
 from onetime.entrypoints.web.onetimesecrets.forms import SecretCreateForm
+from onetime.use_cases.exceptions import (
+    SecretDataWasAlreadyConsumedException,
+    UUIDNotFoundException,
+)
 from onetime.use_cases.manager import SecretAndUrlManager
 
 
@@ -30,6 +34,23 @@ def index(
     return render(request, "onetimesecrets/index.html", {"form": form})
 
 
-def secret(request, uuid: str):
-    print(uuid)
-    return HttpResponse(uuid)
+@inject
+def secret(
+    request,
+    uuid: str,
+    secret_and_url_manager: SecretAndUrlManager = Provide[
+        Container.secret_and_url_manager
+    ],
+):
+    if request.method == "POST":
+        try:
+            data = secret_and_url_manager.get_secret(uuid)
+        except UUIDNotFoundException:
+            return HttpResponseBadRequest(
+                "Could not find the secret with provided UUID"
+            )
+        except SecretDataWasAlreadyConsumedException as e:
+            return HttpResponseBadRequest(str(e))
+        return render(request, "onetimesecrets/show_secret.html", {"secret_data": data})
+
+    return render(request, "onetimesecrets/show_secret.html")

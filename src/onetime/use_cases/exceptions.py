@@ -1,0 +1,6 @@
+class UUIDNotFoundException(Exception):
+    ...
+
+
+class SecretDataWasAlreadyConsumedException(Exception):
+    ...
