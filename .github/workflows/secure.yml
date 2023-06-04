@@ -17,7 +17,6 @@ jobs:
           architecture: x64
       - run: pip install --upgrade virtualenv pip setuptools
       - run: virtualenv .venv
-      - run: source .venv/bin/activate
-      - run: pip install flit==3.8.0
+      - run: source .venv/bin/activate; pip install flit==3.8.0
       - run: make install
       - run: make secure
