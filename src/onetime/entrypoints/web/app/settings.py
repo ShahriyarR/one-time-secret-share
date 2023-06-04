@@ -28,7 +28,7 @@ SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost"]
 
 
 # Application definition

@@ -1,0 +1,1 @@
+web: python src/onetime/entrypoints/web/manage.py runserver 0.0.0.0:5000
