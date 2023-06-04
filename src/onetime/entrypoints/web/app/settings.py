@@ -29,9 +29,9 @@ SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 DEBUG = False
 
 ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost"]
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 # Application definition
 
 INSTALLED_APPS = [
