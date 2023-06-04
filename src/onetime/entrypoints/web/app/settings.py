@@ -26,9 +26,9 @@ key = Fernet.generate_key()
 SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
 # Application definition
