@@ -34,6 +34,9 @@ test-integration:
 test-slow:
 	TEST_RUN="TRUE" ${PYTHON} -m pytest -svvv -m "slow" tests
 
+test-django:
+	${PYTHON} src/onetime/entrypoints/web/manage.py test onetime.entrypoints.web.onetimesecrets.tests
+
 test-cov:
 	TEST_RUN="TRUE" ${PYTHON} -m pytest -svvv --cov-report html --cov=src tests
 
