@@ -7,9 +7,6 @@ on:
   push:
     branches:
       - develop
-    branches-ignore:
-      - main
-      - master
 
 jobs:
   Deploy-Preview:
