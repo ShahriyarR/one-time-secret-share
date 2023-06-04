@@ -38,7 +38,6 @@ mypy-extensions==1.0.0
 networkx==3.1
 ninja==1.11.1
 nodeenv==1.8.0
--e git+ssh://git@github.com/ShahriyarR/one-time-secret-share.git@7671482304896675ac5ebdd12cc19612026808e1#egg=onetime
 packaging==23.1
 pathspec==0.11.1
 pbr==5.11.1
