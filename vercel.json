@@ -1,6 +1,6 @@
 {
     "builds": [{
-        "src": "src/onetime/entrypoints/web/app/wsgi.py/wsgi.py",
+        "src": "src/onetime/entrypoints/web/app/wsgi.py",
         "use": "@ardnt/vercel-python-wsgi",
         "config": { "maxLambdaSize": "15mb" }
     }],
