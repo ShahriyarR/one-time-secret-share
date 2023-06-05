@@ -7,6 +7,7 @@ from onetime.configurator.containers import Container
 from onetime.entrypoints.web.onetimesecrets.forms import SecretCreateForm
 from onetime.use_cases.exceptions import (
     SecretDataWasAlreadyConsumedException,
+    URLExpiredException,
     UUIDNotFoundException,
 )
 from onetime.use_cases.manager import SecretAndUrlManager
@@ -45,11 +46,11 @@ def secret(
     if request.method == "POST":
         try:
             data = secret_and_url_manager.get_secret(uuid)
-        except UUIDNotFoundException:
-            return HttpResponseBadRequest(
-                "Could not find the secret with provided UUID"
-            )
+        except UUIDNotFoundException as e:
+            return HttpResponseBadRequest(str(e))
         except SecretDataWasAlreadyConsumedException as e:
+            return HttpResponseBadRequest(str(e))
+        except URLExpiredException as e:
             return HttpResponseBadRequest(str(e))
         return render(request, "onetimesecrets/show_secret.html", {"secret_data": data})
 
