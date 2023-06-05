@@ -1,11 +1,16 @@
+import datetime
+
 import readonce
 from dependency_injector.wiring import Provide
 
+from onetime.configurator.settings import URL_EXPIRE_TTL
 from onetime.services.manager import SecretManager, generate_and_encrypt_uuid
 from onetime.use_cases.exceptions import (
     SecretDataWasAlreadyConsumedException,
+    URLExpiredException,
     UUIDNotFoundException,
 )
+from onetime.use_cases.validators import is_expired
 
 
 class SecretAndUrlManager:
@@ -16,15 +21,26 @@ class SecretAndUrlManager:
     def generate_secret_and_url(self, secret: str) -> str:
         self.secret_service.generate_secret(secret)
         uuid = generate_and_encrypt_uuid()
-        self.uuid_storage[uuid] = self.secret_service
+        self.uuid_storage[uuid] = {
+            "secret": self.secret_service,
+            "created_at": datetime.datetime.now(),
+        }
         return uuid
 
     def get_secret(self, uuid: str) -> str:
         try:
-            return self.uuid_storage[uuid].get_secret()
+            # expect to raise URLExpiredException if the URL expired
+            return self._get_secret(uuid)
         except KeyError as e:
             raise UUIDNotFoundException("Failed to fetch the provided UUID") from e
         except readonce.UnsupportedOperationException as e:
             raise SecretDataWasAlreadyConsumedException(
                 "Secret can not be retrieved twice, it was already consumed"
             ) from e
+
+    def _get_secret(self, uuid: str) -> str:
+        if not is_expired(
+            self.uuid_storage[uuid]["created_at"], expire_after=URL_EXPIRE_TTL
+        ):
+            return self.uuid_storage[uuid]["secret"].get_secret()
+        raise URLExpiredException("URL with given UUID is expired")

@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.test import Client, TestCase
 
 
@@ -34,11 +36,11 @@ class SecretTestCase(TestCase):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = response.context["secret_url"]
         # Bad request if the url uuid was tempered
-        resp = self.client.post(url + "xxx")
+        resp = self.client.post(f"{url}xxx")
         self.assertEquals(resp.status_code, 400)
 
         # But you can still open the tempered url
-        resp = self.client.get(url + "xxx")
+        resp = self.client.get(f"{url}xxx")
         self.assertEquals(resp.status_code, 200)
 
     def test_if_can_get_secret_twice(self):
@@ -54,3 +56,10 @@ class SecretTestCase(TestCase):
             "Secret can not be retrieved twice, it was already consumed",
             str(resp.content),
         )
+
+    def test_if_can_get_secret_from_expired_url(self):
+        with patch("onetime.use_cases.manager.is_expired", return_value=True):
+            response = self.client.post("/", data={"secret": "awesome-secret"})
+            url = response.context["secret_url"]
+            resp = self.client.post(url)
+            self.assertEquals(resp.status_code, 400)
