@@ -63,3 +63,11 @@ class SecretTestCase(TestCase):
             url = response.context["secret_url"]
             resp = self.client.post(url)
             self.assertEquals(resp.status_code, 400)
+            self.assertIn("URL with given UUID is expired", str(resp.content))
+
+            resp = self.client.post(url)
+            self.assertEquals(resp.status_code, 400)
+            # Now the error message has been changed
+            self.assertIn(
+                "Could not find the secret with provided UUID", str(resp.content)
+            )

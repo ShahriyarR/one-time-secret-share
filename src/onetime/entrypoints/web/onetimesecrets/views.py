@@ -46,10 +46,8 @@ def secret(
     if request.method == "POST":
         try:
             data = secret_and_url_manager.get_secret(uuid)
-        except UUIDNotFoundException:
-            return HttpResponseBadRequest(
-                "Could not find the secret with provided UUID"
-            )
+        except UUIDNotFoundException as e:
+            return HttpResponseBadRequest(str(e))
         except SecretDataWasAlreadyConsumedException as e:
             return HttpResponseBadRequest(str(e))
         except URLExpiredException as e:
