@@ -26,17 +26,11 @@ key = Fernet.generate_key()
 SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost", ".ngrok-free.app"]
-CSRF_TRUSTED_ORIGINS = [
-    "https://one-time-secret-share.herokuapp.com",
-    "https://05e8-95-88-55-7.ngrok-free.app",
-]
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +48,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "csp.middleware.CSPMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -133,3 +128,39 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django Defense Section
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_AGE = 5 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_DOMAIN = "one-time-secret-share.herokuapp.com"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Strict"
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 2
+DATA_UPLOAD_MAX_MEMORY_SIZE = 100000  # 100KB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 0
+
+CSP_DEFAULT_SRC = ("'self'", "https://cdn.jsdelivr.net")
+CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", "https://cdn.jsdelivr.net")
+CSP_IMG_SRC = ("'self'",)
+CSP_FORM_ACTION = ("'self'",)
+CSP_FRAME_ANCESTORS = ("'none'",)
+CSP_BLOCK_ALL_MIXED_CONTENT = True
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://one-time-secret-share.herokuapp.com",
+    "https://05e8-95-88-55-7.ngrok-free.app",
+]
+CSRF_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
