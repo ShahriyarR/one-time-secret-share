@@ -47,8 +47,8 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "csp.middleware.CSPMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -147,10 +147,13 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 2
 DATA_UPLOAD_MAX_MEMORY_SIZE = 100000  # 100KB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 0
 
-CSP_DEFAULT_SRC = ("'self'", "https://cdn.jsdelivr.net")
-CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
+CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'", "https://cdn.jsdelivr.net")
+CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
+CSP_STYLE_SRC = (
+    "'self'",
+    "https://cdn.jsdelivr.net",
+)
 CSP_IMG_SRC = ("'self'",)
 CSP_FORM_ACTION = ("'self'",)
 CSP_FRAME_ANCESTORS = ("'none'",)
