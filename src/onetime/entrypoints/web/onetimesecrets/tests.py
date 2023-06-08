@@ -18,6 +18,11 @@ class SecretTestCase(TestCase):
         self.assertTrue(url)
         self.assertIn("/secret", url)
 
+    def test_if_secret_url_can_be_created_with_empty_secret(self):
+        response = self.client.post("/", data={"secret": ""})
+        url = response.context.get("secret_url")
+        self.assertIs(url, None)
+
     def test_if_secret_url_can_be_opened(self):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = response.context["secret_url"]
