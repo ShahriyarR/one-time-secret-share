@@ -1,5 +1,4 @@
 from dependency_injector.wiring import Provide, inject
-from django.http import HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -46,12 +45,14 @@ def secret(
     if request.method == "POST":
         try:
             data = secret_and_url_manager.get_secret(uuid)
-        except UUIDNotFoundException as e:
-            return HttpResponseBadRequest(str(e))
-        except SecretDataWasAlreadyConsumedException as e:
-            return HttpResponseBadRequest(str(e))
-        except URLExpiredException as e:
-            return HttpResponseBadRequest(str(e))
+        except (
+            UUIDNotFoundException,
+            SecretDataWasAlreadyConsumedException,
+            URLExpiredException,
+        ) as e:
+            return render(
+                request, "onetimesecrets/400.html", {"message": str(e)}, status=400
+            )
         return render(request, "onetimesecrets/show_secret.html", {"secret_data": data})
 
     return render(request, "onetimesecrets/show_secret.html")

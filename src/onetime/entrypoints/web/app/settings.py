@@ -28,8 +28,12 @@ SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost"]
-CSRF_TRUSTED_ORIGINS = ["https://one-time-secret-share.herokuapp.com"]
+ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost", ".ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://one-time-secret-share.herokuapp.com",
+    "https://05e8-95-88-55-7.ngrok-free.app",
+]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
