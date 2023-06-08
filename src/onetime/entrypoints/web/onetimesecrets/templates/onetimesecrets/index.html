@@ -50,7 +50,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script nonce="{{ request.csp_nonce }}">
   function CopyText() {
     const element = document.querySelector('#secret-url');
     const storage = document.createElement('textarea');
