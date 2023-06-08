@@ -33,6 +33,20 @@
   </div>
 </div>
 
+<div class="block">
+  <div class="content is-medium">
+    <h5>Features of the one time secret share platform:</h5>
+    <p>* We do not log secrets and any kind of user activities.</p>
+    <p>* We do not save secrets and any kind of user activities to any kind of local and remote storage.</p>
+    <p>* Each secret is encrypted with per-secret unique key.</p>
+    <p>* The secret can be <b>only read once</b>, there is no second chance.</p>
+    <p>* Each secret URL created with random string and encrypted with unique key(try to create same secret data multiple times, you can see that URLs are unique).</p>
+    <p>* Secret URLs expire in 2 hours. After 2 hours secret URL will be invalidated.</p>
+    <p>* We are using ReadOnce secure objects, based on: <a href="https://github.com/ShahriyarR/py-read-once">py-read-once project</a></p>
+    <p>* Found an issue? bug? Please open an issue at: <a href="https://github.com/ShahriyarR/one-time-secret-share">Our GitHub Repo</a></p>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
