@@ -64,7 +64,12 @@ migrate:
 
 
 run:
+	cd src/onetime/entrypoints/web/; gunicorn --reload app.wsgi
 
 
 run-dev:
 	${PYTHON} src/onetime/entrypoints/web/manage.py runserver
+
+
+collectstatic:
+	${PYTHON} src/onetime/entrypoints/web/manage.py collectstatic
