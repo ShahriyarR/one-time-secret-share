@@ -1,5 +1,4 @@
 import datetime
-import time
 
 import readonce
 from dependency_injector.wiring import Provide
@@ -26,7 +25,6 @@ class SecretAndUrlManager:
             "secret": self.secret_service,
             "created_at": datetime.datetime.now(),
         }
-        time.sleep(0.5)
         return uuid
 
     def get_secret(self, uuid: str) -> str:
@@ -43,7 +41,6 @@ class SecretAndUrlManager:
             ) from e
 
     def _get_secret(self, uuid: str) -> str:
-        time.sleep(0.5)
         if not is_expired(
             self.uuid_storage[uuid]["created_at"], expire_after=URL_EXPIRE_TTL
         ):
