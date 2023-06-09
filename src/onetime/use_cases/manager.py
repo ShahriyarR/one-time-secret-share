@@ -43,6 +43,7 @@ class SecretAndUrlManager:
             ) from e
 
     def _get_secret(self, uuid: str) -> str:
+        time.sleep(0.5)
         if not is_expired(
             self.uuid_storage[uuid]["created_at"], expire_after=URL_EXPIRE_TTL
         ):
