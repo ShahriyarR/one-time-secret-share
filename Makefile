@@ -19,7 +19,7 @@ help:
 	@echo "------------------------------------"
 
 install:
-	${PYTHON} -m flit install --env --deps=develop
+	${PYTHON} -m flit install --env --deps=production
 
 install-dev:
 	${PYTHON} -m flit install --env --deps=develop --symlink
@@ -57,14 +57,8 @@ type-check:
 secure:
 	${PYTHON} -m bandit -r src --config pyproject.toml
 
-migrations:
-
-
-migrate:
-
-
 run:
-	cd src/onetime/entrypoints/web/; gunicorn --reload app.wsgi
+	cd src/onetime/entrypoints/web/; gunicorn --reload --workers=1 app.wsgi
 
 
 run-dev:
