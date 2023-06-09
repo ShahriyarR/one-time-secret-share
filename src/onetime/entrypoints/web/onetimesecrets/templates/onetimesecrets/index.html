@@ -1,5 +1,5 @@
 {% extends 'onetimesecrets/base.html' %}
-
+{% load static %}
 {% block content %}
 <h1 class="title">{% block title %} Welcome to One Time Secret Share {% endblock %}</h1>
 
@@ -27,7 +27,7 @@
       <a href="{{ secret_url }}" id="secret-url">{{ secret_url }}</a>
     </div>
     <div class="control">
-      <button class="button is-danger is-outlined" onclick="CopyText()" id="copy-url-button">Copy URL</button>
+      <button class="button is-danger is-outlined" id="copy-url-button">Copy URL</button>
     </div>
     {% endif %}
   </div>
@@ -50,19 +50,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script nonce="nonce-{{request.csp_nonce}}">
-  function CopyText() {
-    const element = document.querySelector('#secret-url');
-    const storage = document.createElement('textarea');
-    storage.value = element.innerHTML;
-    element.appendChild(storage);
-    storage.select();
-    storage.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    element.removeChild(storage);
-    const button = document.getElementById("copy-url-button");
-    button.value = "Copied";
-    button.innerHTML = "Copied";
-}
-</script>
+<script src="{% static 'copy.js' %}" nonce="nonce-{{request.csp_nonce}}" type="text/javascript"></script>
 {% endblock scripts %}
