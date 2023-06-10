@@ -1,5 +1,9 @@
 # One Time Secret Share
 
+> Live Demo of this project(development stage):
+> 
+> https://one-time-secret-share.herokuapp.com/
+
 One time secret sharing service on top of [ReadOnce objects](https://github.com/ShahriyarR/py-read-once), ensures following features:
 
 * We do not log secrets and any kind of user activities.
