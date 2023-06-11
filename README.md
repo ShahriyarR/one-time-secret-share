@@ -20,7 +20,27 @@ One time secret sharing service on top of [ReadOnce objects](https://github.com/
 
 * Found an issue? bug? Please open an issue in this repo.
 
-## How to install?
+## Self-deployment for internal secret share
+
+As there are increasing concerns how to share the secret between employees, 
+it can be a great idea to host this application internally and use it behind some secure network as well.
+
+The web layer is based on Django with security best practices and the secret object itself is secure by design.
+As the application does not store anything, there is no need for database connection and database migrations, there is no admin panel etc.
+
+The demo application deployed on heroku using following commands:
+
+```
+* flit install --deps=production
+* python3 src/onetime/entrypoints/web/manage.py collectstatic
+* cd src/onetime/entrypoints/web/; gunicorn --workers=1 app.wsgi`
+```
+
+See [Procfile](./Procfile) for Heroku steps.
+
+> Check the demo link: https://one-time-secret-share.herokuapp.com/
+
+## How to install for development?
 
 We use flit for package management.
 
@@ -61,5 +81,4 @@ For running with gunicorn:
 
 ## TODO lists
 
-* Deploy to production with custom domain
 * Ensure incident reports
