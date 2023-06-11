@@ -1,10 +1,13 @@
 from unittest.mock import patch
 
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 
 
 class SecretTestCase(TestCase):
     def setUp(self) -> None:
+        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
+        settings_manager.enable()
+        self.addCleanup(settings_manager.disable)
         self.client = Client()
 
     def test_if_create_secret_index_page_is_shown(self):
