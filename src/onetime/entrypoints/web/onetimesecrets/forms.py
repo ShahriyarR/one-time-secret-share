@@ -11,4 +11,5 @@ class SecretCreateForm(forms.Form):
                 "class": "input is-large is-focused",
             }
         ),
+        max_length=200,
     )

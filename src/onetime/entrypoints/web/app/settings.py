@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "onetimesecrets",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "csp.middleware.CSPMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -139,6 +141,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
+SECURE_REFERRER_POLICY = "same-origin"
 
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 5 * 60
@@ -172,3 +175,10 @@ CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_AGE = 2 * 60 * 60
+
+CORS_ALLOWED_ORIGINS = [
+    "https://one-time-secret-share.herokuapp.com",
+    "https://05e8-95-88-55-7.ngrok-free.app",
+]
+CORS_PREFLIGHT_MAX_AGE = 1 if DEBUG else 60
+CORS_ALLOW_METHODS = ("GET",)

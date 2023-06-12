@@ -1,5 +1,9 @@
+import random
+import string
+import tempfile
 from unittest.mock import patch
 
+import pytest
 from django.test import Client, TestCase, override_settings
 
 
@@ -98,3 +102,35 @@ class GenericTestCases(TestCase):
         url = response.context["secret_url"]
         resp = self.client.put(url)
         self.assertEquals(resp.status_code, 405)
+
+    def test_if_can_send_file_object_as_secret(self):
+        with tempfile.TemporaryFile() as file_:
+            response = self.client.post("/", data={"secret": file_})
+            self.assertEquals(response.status_code, 200)
+            with pytest.raises(KeyError):
+                _ = response.context["secret_url"]
+
+    def test_if_large_string_is_allowed(self):
+        file_size = 1 * 1024 * 1024
+
+        # Generate random string data
+        data = "".join(
+            random.choice(string.ascii_letters + string.digits)
+            for _ in range(file_size)
+        )
+        response = self.client.post("/", data={"secret": data})
+        self.assertEquals(response.status_code, 400)
+
+    def test_form_max_length_string(self):
+        file_size = 201
+
+        # Generate random string data
+        data = "".join(
+            random.choice(string.ascii_letters + string.digits)
+            for _ in range(file_size)
+        )
+        response = self.client.post("/", data={"secret": data})
+        self.assertEquals(response.status_code, 200)
+        # but the secret url was not generated
+        with pytest.raises(KeyError):
+            _ = response.context["secret_url"]
