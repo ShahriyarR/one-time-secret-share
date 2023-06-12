@@ -1,6 +1,7 @@
 from dependency_injector.wiring import Provide, inject
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from onetime.configurator.containers import Container
 from onetime.entrypoints.web.onetimesecrets.forms import SecretCreateForm
@@ -12,6 +13,7 @@ from onetime.use_cases.exceptions import (
 from onetime.use_cases.manager import SecretAndUrlManager
 
 
+@require_http_methods(["GET", "POST"])
 @inject
 def index(
     request,
@@ -34,6 +36,7 @@ def index(
     return render(request, "onetimesecrets/index.html", {"form": form})
 
 
+@require_http_methods(["GET", "POST"])
 @inject
 def secret(
     request,

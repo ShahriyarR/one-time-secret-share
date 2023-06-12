@@ -30,14 +30,14 @@ class SecretTestCase(TestCase):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = response.context["secret_url"]
         resp = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(resp.status_code, 200)
         self.assertContains(resp, "Click below to retrieve secret value")
 
     def test_if_can_get_secret_using_secret_url(self):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = response.context["secret_url"]
         resp = self.client.post(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(resp.status_code, 200)
         self.assertEquals(resp.context["secret_data"], "awesome-secret")
 
     def test_if_can_get_secret_using_wrong_uuid(self):
@@ -55,7 +55,7 @@ class SecretTestCase(TestCase):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = response.context["secret_url"]
         resp = self.client.post(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(resp.status_code, 200)
         self.assertEquals(resp.context["secret_data"], "awesome-secret")
         # Impossible to get secret twice; it is read once.
         resp = self.client.post(url)
@@ -79,3 +79,22 @@ class SecretTestCase(TestCase):
             self.assertIn(
                 "Could not find the secret with provided UUID", str(resp.content)
             )
+
+
+class GenericTestCases(TestCase):
+    def setUp(self) -> None:
+        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
+        settings_manager.enable()
+        self.addCleanup(settings_manager.disable)
+        self.client = Client()
+
+    def test_if_can_send_put_request(self):
+        response = self.client.put("/", data={"secret": "awesome-secret"})
+        # HttpResponseNotAllowed
+        self.assertEquals(response.status_code, 405)
+
+    def test_if_can_send_put_request_for_getting_secret(self):
+        response = self.client.post("/", data={"secret": "awesome-secret"})
+        url = response.context["secret_url"]
+        resp = self.client.put(url)
+        self.assertEquals(resp.status_code, 405)
