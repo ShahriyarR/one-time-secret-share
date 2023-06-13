@@ -50,7 +50,7 @@ Activate virtualenv, with your preferred way and install flit:
 python3.10 -m venv .venv
 source .venv/bin/activate
 
-pip install flit=3.8.0
+pip install flit==3.8.0
 ```
 
 We use Makefile for automation procedures. Please see the Makefile in the repo for further details.
