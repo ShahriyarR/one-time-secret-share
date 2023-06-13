@@ -1,0 +1,47 @@
+name: Bug Report
+description: Report a bug
+labels: [ "kind/bug" ]
+body:
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prerequisites
+      description: Please answer the following questions for yourself before submitting an issue.
+      options:
+        - label: I checked the documentation and found no answer
+          required: true
+        - label: I checked to make sure that this issue has not already been filed
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: |
+        Please provide as much info as possible. Not doing so may result in your bug not being addressed in a timely manner.
+    validations:
+      required: true
+  
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: How can we reproduce it (as minimally and precisely as possible)?
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Anything else we need to know?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
