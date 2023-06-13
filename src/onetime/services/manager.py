@@ -7,13 +7,13 @@ from onetime.domain.model import Secret
 
 class SecretManager:
     def __init__(self):
-        self.secret = None
+        self.secret = {}
 
-    def generate_secret(self, secret: str) -> None:
-        self.secret = Secret(secret)
+    def generate_secret(self, uuid: str, secret: str) -> None:
+        self.secret[uuid] = Secret(secret)
 
-    def get_secret(self) -> str:
-        return self.secret.get_secret()
+    def get_secret(self, uuid: str) -> str:
+        return self.secret[uuid].get_secret()
 
 
 def generate_and_encrypt_uuid() -> str:
