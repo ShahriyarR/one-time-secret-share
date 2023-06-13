@@ -67,7 +67,3 @@ run-dev:
 
 collectstatic:
 	${PYTHON} src/onetime/entrypoints/web/manage.py collectstatic
-
-
-migrate:
-	${PYTHON} src/onetime/entrypoints/web/manage.py migrate

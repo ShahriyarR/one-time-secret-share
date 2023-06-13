@@ -57,8 +57,6 @@ We use Makefile for automation procedures. Please see the Makefile in the repo f
 
 But to install this project with development dependencies:
 
-`make migrate`
-
 `make install-dev`
 
 With production dependencies:
