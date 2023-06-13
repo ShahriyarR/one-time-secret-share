@@ -69,6 +69,27 @@ class SecretTestCase(TestCase):
             str(resp.content),
         )
 
+    def test_if_can_create_and_get_same_secret_multiple_times(self):
+        response1 = self.client.post("/", data={"secret": "awesome-secret"})
+        response2 = self.client.post("/", data={"secret": "awesome-secret"})
+        response3 = self.client.post("/", data={"secret": "awesome-secret"})
+        url1 = response1.context["secret_url"]
+        url2 = response2.context["secret_url"]
+        url3 = response3.context["secret_url"]
+
+        resp1 = self.client.post(url1)
+        resp2 = self.client.post(url2)
+        resp3 = self.client.post(url3)
+
+        self.assertEquals(resp1.status_code, 200)
+        self.assertEquals(resp1.context["secret_data"], "awesome-secret")
+
+        self.assertEquals(resp2.status_code, 200)
+        self.assertEquals(resp2.context["secret_data"], "awesome-secret")
+
+        self.assertEquals(resp3.status_code, 200)
+        self.assertEquals(resp3.context["secret_data"], "awesome-secret")
+
     def test_if_can_get_secret_from_expired_url(self):
         with patch("onetime.use_cases.manager.is_expired", return_value=True):
             response = self.client.post("/", data={"secret": "awesome-secret"})

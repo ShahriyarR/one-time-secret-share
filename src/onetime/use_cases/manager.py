@@ -19,8 +19,8 @@ class SecretAndUrlManager:
         self.uuid_storage = {}
 
     def generate_secret_and_url(self, secret: str) -> str:
-        self.secret_service.generate_secret(secret)
         uuid = generate_and_encrypt_uuid()
+        self.secret_service.generate_secret(uuid, secret)
         self.uuid_storage[uuid] = {
             "secret": self.secret_service,
             "created_at": datetime.datetime.now(),
@@ -44,7 +44,7 @@ class SecretAndUrlManager:
         if not is_expired(
             self.uuid_storage[uuid]["created_at"], expire_after=URL_EXPIRE_TTL
         ):
-            return self.uuid_storage[uuid]["secret"].get_secret()
+            return self.uuid_storage[uuid]["secret"].get_secret(uuid)
         # If we got here then the link is expired; first remove the URL and raise exception
         del self.uuid_storage[uuid]
         raise URLExpiredException("URL with given UUID is expired")
