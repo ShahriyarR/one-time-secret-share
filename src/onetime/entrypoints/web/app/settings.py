@@ -28,7 +28,12 @@ SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "localhost", ".ngrok-free.app"]
+ALLOWED_HOSTS = [
+    "one-time-secret-share.herokuapp.com",
+    "127.0.0.1",
+    "localhost",
+    ".ngrok-free.app",
+]
 
 
 # Application definition
@@ -40,12 +45,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "onetimesecrets",
     "corsheaders",
+    "onetimesecrets",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -143,12 +149,17 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_REFERRER_POLICY = "same-origin"
 
+SECURE_HSTS_SECONDS = 2592000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 5 * 60
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_DOMAIN = "one-time-secret-share.herokuapp.com"
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_NAME = "__Secure-sessionid"
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2
 DATA_UPLOAD_MAX_MEMORY_SIZE = 100000  # 100KB
@@ -169,16 +180,37 @@ CSP_BLOCK_ALL_MIXED_CONTENT = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://one-time-secret-share.herokuapp.com",
-    "https://05e8-95-88-55-7.ngrok-free.app",
 ]
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_AGE = 2 * 60 * 60
+CSRF_COOKIE_NAME = "__Secure-csrftoken"
 
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://one-time-secret-share.herokuapp.com",
-    "https://05e8-95-88-55-7.ngrok-free.app",
+    "http://127.0.0.1:8000",
 ]
 CORS_PREFLIGHT_MAX_AGE = 1 if DEBUG else 60
 CORS_ALLOW_METHODS = ("GET",)
+CORS_ALLOW_CREDENTIALS = False
+
+PERMISSIONS_POLICY = {
+    "accelerometer": [],
+    "ambient-light-sensor": [],
+    "autoplay": [],
+    "camera": [],
+    "display-capture": [],
+    "document-domain": [],
+    "encrypted-media": [],
+    "fullscreen": [],
+    "geolocation": [],
+    "gyroscope": [],
+    "interest-cohort": [],
+    "magnetometer": [],
+    "microphone": [],
+    "midi": [],
+    "payment": [],
+    "usb": [],
+}

@@ -1,3 +1,3 @@
 """ One time secret sharing on top of ReadOnce objects ideas """
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
