@@ -24,7 +24,6 @@ install:
 install-dev:
 	${PYTHON} -m flit install --env --deps=develop --symlink
 
-
 test:
 	TEST_RUN="TRUE" ${PYTHON} -m pytest -svvv -m "not slow and not integration" tests
 
@@ -36,6 +35,9 @@ test-slow:
 
 test-django:
 	${PYTHON} src/onetime/entrypoints/web/manage.py test onetime.entrypoints.web.onetimesecrets.tests
+
+test-behave:
+	${PYTHON} -m behave --show-timings --summary
 
 test-cov:
 	TEST_RUN="TRUE" ${PYTHON} -m pytest -svvv --cov-report html --cov=src tests
