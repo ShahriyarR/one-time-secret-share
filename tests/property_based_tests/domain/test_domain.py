@@ -6,7 +6,6 @@ from readonce import UnsupportedOperationException
 from onetime.domain.model import Secret
 
 
-# Test case 1: Test that the secret is not retrievable after being accessed multiple times
 @given(st.text())
 def test_secret_retrieval(secret):
     # Create a Secret object
@@ -18,7 +17,6 @@ def test_secret_retrieval(secret):
             secret_obj.get_secret()
 
 
-# Test case 2: Test that the secret is not retrievable after adding a new secret
 @given(st.text(), st.text())
 def test_secret_update(secret1, secret2):
     # Create a Secret object with the first secret
