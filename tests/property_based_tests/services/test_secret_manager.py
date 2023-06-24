@@ -130,7 +130,7 @@ def test_empty_string_secret(uuid, secret):
     manager.generate_secret(uuid, "")
 
     # Verify that the secret is retrievable
-    manager.get_secret(uuid) == ""
+    assert manager.get_secret(uuid) == ""
 
 
 @given(st.uuids(), st.text())
