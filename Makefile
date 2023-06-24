@@ -37,7 +37,7 @@ test-django:
 	${PYTHON} src/onetime/entrypoints/web/manage.py test onetime.entrypoints.web.onetimesecrets.tests
 
 test-behave:
-	${PYTHON} -m behave --show-timings --summary
+	${PYTHON} -m behave --show-timings --summary --capture --capture-stderr --logcapture --color
 
 test-cov:
 	TEST_RUN="TRUE" ${PYTHON} -m pytest -svvv --cov-report html --cov=src tests
