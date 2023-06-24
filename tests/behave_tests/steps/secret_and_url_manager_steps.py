@@ -1,6 +1,9 @@
+from unittest.mock import patch
+
 from behave import given, then, when
 
 from onetime.services.manager import SecretManager
+from onetime.use_cases.exceptions import URLExpiredException, UUIDNotFoundException
 from onetime.use_cases.manager import SecretAndUrlManager
 
 # Scenario: Generating a secret and URL
@@ -27,3 +30,26 @@ def step_impl(context):
 @when("I retrieve the secret with returned UUID")
 def step_impl(context):
     context.secret = context.secret_and_url_manager.get_secret(context.uuid)
+
+
+# Scenario: Retrieving an expired URL
+
+
+@then("an error should occur if the URL was expired and I try to retrieve the secret")
+def step_impl(context):
+    with patch("onetime.use_cases.manager.is_expired", return_value=True):
+        try:
+            context.secret = context.secret_and_url_manager.get_secret(context.uuid)
+        except URLExpiredException:
+            assert True
+
+
+# Scenario: Retrieving a non-existent secret
+
+
+@then('an error should occur if I retrieve a secret with non-existing UUID "{uuid}"')
+def step_impl(context, uuid):
+    try:
+        context.secret = context.secret_and_url_manager.get_secret(uuid)
+    except UUIDNotFoundException:
+        assert True

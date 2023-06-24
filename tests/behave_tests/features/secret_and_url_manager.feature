@@ -14,16 +14,14 @@ Feature: Secret and URL Manager
     When I retrieve the secret with returned UUID
     Then the secret value should be "MySecret"
 #
-#  Scenario: Retrieving an expired URL
-#    Given I have a Secret Manager
-#    And an expired secret and URL with UUID "123" is generated
-#    When I retrieve the secret with UUID "123"
-#    Then an error should occur
+  Scenario: Retrieving an expired URL
+    Given I have a Secret and URL manager
+    When I generate a secret and URL with value "MySecret" and UUID returned
+    Then an error should occur if the URL was expired and I try to retrieve the secret
 #
-#  Scenario: Retrieving a non-existent secret
-#    Given I have a Secret Manager
-#    When I retrieve a secret with UUID "123"
-#    Then an error should occur
+  Scenario: Retrieving a non-existent secret
+    Given I have a Secret and URL manager
+    Then  an error should occur if I retrieve a secret with non-existing UUID "123"
 #
 #  Scenario: Retrieving a secret that was already consumed
 #    Given I have a Secret Manager
