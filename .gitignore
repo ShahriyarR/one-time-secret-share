@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 .vercel
 src/onetime/entrypoints/web/staticfiles
+.mutmut-cache
+html
