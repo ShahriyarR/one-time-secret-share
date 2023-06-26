@@ -75,6 +75,10 @@ With production dependencies:
 
 `make test-slow` - for running slow marked tests
 
+`make test-django` - for running django tests
+
+`make test-behave` - for running bdd tests
+
 ## How to run the server?
 
 For running development server:
