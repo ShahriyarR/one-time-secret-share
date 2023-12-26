@@ -1,48 +1,31 @@
 from flask import Flask
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
+from onetime.entrypoints.web.web_flask.containers import Container
+from cryptography.fernet import Fernet
+from uuid import uuid4
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 's3cr3t_k3y'
 
-from .views import *
-from .form import *
-# talisman = Talisman(app, force_https=True)
-# talisman = Talisman(app,frame_options='SAMEORIGIN')
+key = Fernet.generate_key()
+container=Container()
 
+app.config['SECRET_KEY'] = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
+app.config['CONTAINER'] = container
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
-# SELF = "'self'"
-# talisman = Talisman(
-#     app,
-#     content_security_policy={
-#         'default-src': SELF,
-#         'img-src': '*',
-#         'script-src': [
-#             SELF,
-#             'some.cdn.com',
-#         ],
-#         'style-src': [
-#             SELF,
-#             'another.cdn.com',
-#         ],
-#     },
-#     content_security_policy_nonce_in=['script-src'],
-#     feature_policy={
-#         'geolocation': '\'none\'',
-#     }
-# )
 
 @app.after_request
 def add_security_headers(response):
     response.headers['Strict-Transport-Security'] = 'max-age=31536000'
-    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-    # response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['X-Content-Type-Options'] = 'nosniff'
+    # response.headers['Cache-Control'] = 'public, max-age=31536000'
+    response.headers['X-Frame-Options'] = "SAMEORIGIN"
+    response.headers['Content-Type'] = 'nosniff'
     return response
 
-# Güvenlik ayarları
+
+# security settings
 app.config['SECURE_PROXY_SSL_HEADER'] = ("HTTP_X_FORWARDED_PROTO", "https")
 app.config['SECURE_SSL_REDIRECT'] = True
 app.config['SECURE_CONTENT_TYPE_NOSNIFF'] = True
@@ -51,12 +34,15 @@ app.config['SECURE_REFERRER_POLICY'] = "same-origin"
 app.config['SECURE_HSTS_SECONDS'] = 2592000
 app.config['SECURE_HSTS_INCLUDE_SUBDOMAINS'] = True
 app.config['SECURE_HSTS_PRELOAD'] = True
+app.config['Strict-Transport-Security'] = 'public, max-age=31536000'
+app.config['X-Frame-Options'] = 'SAMEORIGIN'
 
-# security settings
+# cookie settings
 
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_AGE'] = 5 * 60
+app.config['SESSION_SAVE_EVERY_REQUEST'] = True
 app.config['SESSION_COOKIE_DOMAIN'] = "one-time-secret-share.herokuapp.com"
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = "Strict"
@@ -99,21 +85,21 @@ CORS(app, origins=[
 
 # Permissions Policy settings
 app.config['Permissions-Policy'] = {
-    "accelerometer": [],
-    "ambient-light-sensor": [],
-    "autoplay": [],
-    "camera": [],
-    "display-capture": [],
-    "document-domain": [],
-    "encrypted-media": [],
-    "fullscreen": [],
-    "geolocation": [],
-    "gyroscope": [],
-    "interest-cohort": [],
-    "magnetometer": [],
-    "microphone": [],
-    "midi": [],
-    "payment": [],
-    "usb": [],
+    "accelerometer": None,
+    "ambient-light-sensor": None,
+    "autoplay": None,
+    "camera": None,
+    "display-capture": None,
+    "document-domain": None,
+    "encrypted-media": None,
+    "fullscreen": None,
+    "geolocation": None,
+    "gyroscope": None,
+    "interest-cohort": None,
+    "magnetometer": None,
+    "microphone": None,
+    "midi": None,
+    "payment": None,
+    "usb": None,
 }
 

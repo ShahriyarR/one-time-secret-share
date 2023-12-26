@@ -1,0 +1,1 @@
+from onetime.entrypoints.web.web_flask.app import app

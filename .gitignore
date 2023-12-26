@@ -162,3 +162,5 @@ cython_debug/
 src/onetime/entrypoints/web/staticfiles
 .mutmut-cache
 html
+
+.DS_Store
