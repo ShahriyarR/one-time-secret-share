@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, Length
 
+
 class SecretCreateForm(FlaskForm):
     secret = StringField(
         label=False,
@@ -9,7 +10,5 @@ class SecretCreateForm(FlaskForm):
         render_kw={
             "placeholder": "Add your secret",
             "class": "input is-large is-focused",
-        }
+        },
     )
-
-
