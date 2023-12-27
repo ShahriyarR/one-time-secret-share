@@ -3,18 +3,16 @@ from uuid import uuid4
 from cryptography.fernet import Fernet
 from flask import Flask
 from flask_cors import CORS
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 from onetime.configurator.containers import Container
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 key = Fernet.generate_key()
 container = Container()
-
-app.config["SECRET_KEY"] = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
-app.config["CONTAINER"] = container
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+app.container = container
+app.secret_key = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
+# app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
 
 @app.after_request
@@ -84,6 +82,7 @@ CORS(
     origins=[
         "https://one-time-secret-share.herokuapp.com",
         "http://127.0.0.1:5000",
+        "*.ngrok-free.app",
     ],
     methods=["GET"],
     supports_credentials=False,
