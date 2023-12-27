@@ -1,4 +1,4 @@
-from dependency_injector.wiring import Provide, inject
+from dependency_injector.wiring import Provide
 from flask import render_template, request, url_for
 
 from onetime.entrypoints.web_flask.app import app
@@ -12,7 +12,6 @@ from onetime.use_cases.manager import SecretAndUrlManager
 
 
 @app.route("/", methods=["GET", "POST"])
-@inject
 def index(
     secret_and_url_manager: SecretAndUrlManager = Provide["secret_and_url_manager"],
 ):
@@ -31,7 +30,6 @@ def index(
 
 
 @app.route("/secret/<string:uuid>", methods=["GET", "POST"])
-@inject
 def secret(
     uuid: str,
     secret_and_url_manager: SecretAndUrlManager = Provide["secret_and_url_manager"],
