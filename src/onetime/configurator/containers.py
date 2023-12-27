@@ -8,7 +8,8 @@ class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
     wiring_config = containers.WiringConfiguration(
-        modules=["onetime.use_cases.manager"]
+        modules=["onetime.use_cases.manager"],
+        packages=["onetime.entrypoints.web_flask"],
     )
 
     secret_manager = providers.Factory(SecretManager)

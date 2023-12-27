@@ -66,6 +66,9 @@ run:
 run-dev:
 	${PYTHON} src/onetime/entrypoints/web/manage.py runserver
 
+run-flask:
+	${PYTHON} -m flask --app src.onetime.entrypoints.web_flask.application --debug run --host 0.0.0.0
+
 
 collectstatic:
 	${PYTHON} src/onetime/entrypoints/web/manage.py collectstatic
