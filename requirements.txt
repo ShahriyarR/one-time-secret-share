@@ -20,17 +20,20 @@ django-cors-headers==4.0.0
 django-csp==3.7
 django-permissions-policy==4.16.0
 docutils==0.20.1
+exceptiongroup==1.2.0
 filelock==3.12.0
 flake8==6.0.0
 flake8-bugbear==23.5.9
 Flask==3.0.0
 Flask-Cors==4.0.0
+Flask-Testing==0.8.1
 Flask-WTF==1.2.1
 flit==3.9.0
 flit_core==3.9.0
 gitdb==4.0.10
 GitPython==3.1.31
 gunicorn==20.1.0
+hypothesis==6.92.2
 icontract==2.6.2
 identify==2.5.24
 idna==3.4
@@ -48,6 +51,7 @@ mypy-extensions==1.0.0
 networkx==3.1
 ninja==1.11.1
 nodeenv==1.8.0
+-e git+https://github.com/ShahriyarR/one-time-secret-share.git@552e383190527262405b945b01de381c0e17011c#egg=onetime
 packaging==23.1
 parse==1.19.1
 parse-type==0.6.0
@@ -72,6 +76,7 @@ requests==2.31.0
 rich==13.4.1
 six==1.16.0
 smmap==5.0.0
+sortedcontainers==2.4.0
 sqlparse==0.4.4
 stevedore==5.1.0
 tabulate==0.9.0
