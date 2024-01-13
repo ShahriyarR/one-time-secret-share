@@ -8,7 +8,10 @@ from unittest.mock import patch
 import tempfile
 import random
 import string
+import configparser
 
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 class SecretTestCase(FlaskTestCase):
 
@@ -19,7 +22,7 @@ class SecretTestCase(FlaskTestCase):
         app.config['TESTING'] = True
         app.config['SECURE_SSL_REDIRECT'] = False
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SECRET_KEY'] = 'your_secret_key_for_testing'
+        app.config['SECRET_KEY'] = config.get('web_flask', 'SECRET_KEY')
         app.config['MAX_CONTENT_LENGTH'] = 100 * 1024
         app.config['MAX_CONTENT_LENGTH_FILE_UPLOAD'] = 0
         app.config['DATA_UPLOAD_MAX_NUMBER_FIELDS'] = 0
