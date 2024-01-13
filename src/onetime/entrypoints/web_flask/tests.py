@@ -53,8 +53,8 @@ class SecretTestCase(FlaskTestCase):
         self.assertIn("/secret", url)
 
     def test_if_secret_url_can_be_created_with_empty_secret(self):
-        response = self.client.post("/", data={"secret": " "})
-        url=self.get_url(response = response)
+        response = self.client.post("/", data={"secret": ""})
+        url=self.get_url(response=response)
         self.assertIs(url, None)
 
     def test_if_secret_url_can_be_opened(self):
