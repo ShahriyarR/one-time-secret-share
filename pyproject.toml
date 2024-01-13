@@ -21,6 +21,7 @@ dependencies = [
     "Flask >= 3.0.0",
     "Flask-WTF >= 1.2.1",
     "Flask-Cors >= 4.0.0",
+    "Flask-Testing >= 0.8.1",
     "django-permissions-policy >=4.16.0",
 ]
 

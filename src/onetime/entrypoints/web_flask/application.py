@@ -14,6 +14,8 @@ def create_app() -> Flask:
     container = Container()
     app.container = container
     app.secret_key = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
+    app.config['MAX_CONTENT_LENGTH'] = 100 * 1024
+    app.config['MAX_CONTENT_LENGTH_FILE_UPLOAD'] = 0
     app.register_blueprint(secret_blueprint)
     # set_security_settings(app)
     return app

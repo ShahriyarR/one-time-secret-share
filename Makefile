@@ -36,6 +36,9 @@ test-slow:
 test-django:
 	${PYTHON} src/onetime/entrypoints/web/manage.py test onetime.entrypoints.web.onetimesecrets.tests
 
+test-flask:
+	${PYTHON} src/onetime/entrypoints/web_flask/tests.py
+
 test-behave:
 	${PYTHON} -m behave --show-timings --summary --capture --capture-stderr --logcapture --color
 
