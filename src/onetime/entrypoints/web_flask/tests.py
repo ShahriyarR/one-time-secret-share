@@ -8,10 +8,8 @@ from unittest.mock import patch
 import tempfile
 import random
 import string
-import configparser
-
-config = configparser.ConfigParser()
-config.read('config.ini')
+from cryptography.fernet import Fernet
+from uuid import uuid4
 
 
 class SecretTestCase(FlaskTestCase):
@@ -19,11 +17,12 @@ class SecretTestCase(FlaskTestCase):
     def create_app(self):
         app = Flask(__name__)
         container = Container()
+        key = Fernet.generate_key()
         app.container = container
         app.config['TESTING'] = True
         app.config['SECURE_SSL_REDIRECT'] = False
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SECRET_KEY'] = config.get('web_flask', 'SECRET_KEY')
+        app.config['SECRET_KEY'] = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
         app.config['MAX_CONTENT_LENGTH'] = 100 * 1024
         app.config['MAX_CONTENT_LENGTH_FILE_UPLOAD'] = 0
         app.config['DATA_UPLOAD_MAX_NUMBER_FIELDS'] = 0
@@ -33,7 +32,7 @@ class SecretTestCase(FlaskTestCase):
     def setUp(self):
         self.client = Client(self.app)
 
-    def get_url(self, response):
+    def get_url(self,response):
         html_content = response.get_data(as_text=True)
         start_index = html_content.find('http://localhost/secret/')
         end_index = html_content.find('"', start_index)
@@ -53,8 +52,8 @@ class SecretTestCase(FlaskTestCase):
         self.assertIn("/secret", url)
 
     def test_if_secret_url_can_be_created_with_empty_secret(self):
-        response = self.client.post("/", data={"secret": " "})
-        url = self.get_url(response=response)
+        response = self.client.post("/", data={"secret": ""})
+        url=self.get_url(response=response)
         self.assertIs(url, None)
 
     def test_if_secret_url_can_be_opened(self):
@@ -63,7 +62,7 @@ class SecretTestCase(FlaskTestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn(b"Click below to retrieve secret value", resp.data)
-
+        
     def test_if_can_get_secret_using_secret_url(self):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = self.get_url(response=response)
@@ -126,6 +125,7 @@ class SecretTestCase(FlaskTestCase):
             self.assertEqual(resp.status_code, 400)
             # Now the error message has been changed
             self.assertIn(b"Could not find the secret with provided UUID", resp.data)
+
 
     def test_if_can_send_put_request(self):
         response = self.client.put("/", data={"secret": "awesome-secret"})
