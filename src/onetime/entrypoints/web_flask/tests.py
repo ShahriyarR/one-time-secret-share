@@ -127,7 +127,6 @@ class SecretTestCase(FlaskTestCase):
             # Now the error message has been changed
             self.assertIn(b"Could not find the secret with provided UUID", resp.data)
 
-
     def test_if_can_send_put_request(self):
         response = self.client.put("/", data={"secret": "awesome-secret"})
         # HttpResponseNotAllowed
