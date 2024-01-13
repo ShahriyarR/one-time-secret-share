@@ -33,7 +33,7 @@ class SecretTestCase(FlaskTestCase):
     def setUp(self):
         self.client = Client(self.app)
 
-    def get_url(self,response):
+    def get_url(self, response):
         html_content = response.get_data(as_text=True)
         start_index = html_content.find('http://localhost/secret/')
         end_index = html_content.find('"', start_index)
@@ -54,7 +54,7 @@ class SecretTestCase(FlaskTestCase):
 
     def test_if_secret_url_can_be_created_with_empty_secret(self):
         response = self.client.post("/", data={"secret": " "})
-        url=self.get_url(response=response)
+        url=self.get_url(response = response)
         self.assertIs(url, None)
 
     def test_if_secret_url_can_be_opened(self):
@@ -63,7 +63,7 @@ class SecretTestCase(FlaskTestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn(b"Click below to retrieve secret value", resp.data)
-        
+
     def test_if_can_get_secret_using_secret_url(self):
         response = self.client.post("/", data={"secret": "awesome-secret"})
         url = self.get_url(response=response)
