@@ -42,6 +42,7 @@ dev = [
     "django-debug-toolbar",
     "django-browser-reload",
     "rich",
+    "djhtml",
     ]
 test = [
     "pytest ==7.1.3",

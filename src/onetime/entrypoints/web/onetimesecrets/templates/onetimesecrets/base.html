@@ -7,27 +7,27 @@
     <title>{% block title %} {% endblock %} </title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-</head>
+  </head>
   <body>
-  <section class="section">
-    <div class="container">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
+    <section class="section">
+      <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
               <div class="buttons">
                 <a class="button is-primary" href="/">
                   <strong>Home</strong>
                 </a>
               </div>
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      {% block content %} {% endblock %}
-    </div>
-  </section>
+        </nav>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        {% block content %} {% endblock %}
+      </div>
+    </section>
   </body>
 </html>
