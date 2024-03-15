@@ -41,6 +41,7 @@ dev = [
     "flake8-bugbear >= 22.12.6",
     "django-debug-toolbar",
     "django-browser-reload",
+    "rich",
     ]
 test = [
     "pytest ==7.1.3",
