@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 from pathlib import Path
 from uuid import uuid4
 
@@ -26,13 +27,15 @@ key = Fernet.generate_key()
 SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "one-time-secret-share.herokuapp.com",
     "127.0.0.1",
     "localhost",
     ".ngrok-free.app",
+    ".ngrok.app",
+    ".dind.io",
 ]
 
 
