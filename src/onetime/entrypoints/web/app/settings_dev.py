@@ -10,6 +10,7 @@ if DEBUG:
         "django.contrib.staticfiles",
         "corsheaders",
         "debug_toolbar",
+        "django_browser_reload",
         "onetimesecrets",
     ]
 
@@ -23,6 +24,7 @@ if DEBUG:
         "csp.middleware.CSPMiddleware",
         "django.middleware.csrf.CsrfViewMiddleware",
         "debug_toolbar.middleware.DebugToolbarMiddleware",  # debug toolbar
+        "django_browser_reload.middleware.BrowserReloadMiddleware",  # browser reload
         "django.contrib.auth.middleware.AuthenticationMiddleware",
         "django.contrib.messages.middleware.MessageMiddleware",
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
