@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core >=3.8,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -39,6 +39,7 @@ dev = [
     "pytype >= 2022.12.15",
     "bandit >= 1.7.5",
     "flake8-bugbear >= 22.12.6",
+    "django-debug-toolbar",
     ]
 test = [
     "pytest ==7.1.3",

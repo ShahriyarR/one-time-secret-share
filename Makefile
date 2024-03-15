@@ -64,7 +64,7 @@ run:
 
 
 run-dev:
-	${PYTHON} src/onetime/entrypoints/web/manage.py runserver
+	${PYTHON} src/onetime/entrypoints/web/manage.py runserver --settings=app.settings_dev
 
 run-flask:
 	${PYTHON} -m flask --app src.onetime.entrypoints.web_flask.application --debug run --host 0.0.0.0
