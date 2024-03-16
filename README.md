@@ -1,10 +1,12 @@
 # One Time Secret Share
 
-> Live Demo of this project(development stage):
-> 
-> https://one-time-secret-share.herokuapp.com/
+> For development things, we use ngrok and the hostname we choose secret.ngrok.dev
+> That's why in Django settings you may see this hostname, just change these things to your domain.
 
 --------
+
+> IMPORTANT: the Flask implementation of this project is experimental.
+> Django implementation is production ready.
 
 > Live demo got A+ from SecurityHeaders:
 > 

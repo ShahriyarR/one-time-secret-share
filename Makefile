@@ -47,6 +47,7 @@ format:
 	${PYTHON} -m autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place src --exclude=__init__.py
 	${PYTHON} -m black src tests --config pyproject.toml
 	${PYTHON} -m isort src tests
+	${PYTHON} -m djhtml --tabwidth 2 src/onetime/entrypoints/web/onetimesecrets/templates/*
 
 lint:
 	${PYTHON} -m flake8 src
@@ -64,7 +65,7 @@ run:
 
 
 run-dev:
-	${PYTHON} src/onetime/entrypoints/web/manage.py runserver --settings=app.settings_dev
+	DEBUG=True ${PYTHON} src/onetime/entrypoints/web/manage.py runserver --settings=app.settings_dev
 
 run-flask:
 	${PYTHON} -m flask --app src.onetime.entrypoints.web_flask.application --debug run --host 0.0.0.0
