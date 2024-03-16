@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from uuid import uuid4
 
@@ -27,14 +28,12 @@ key = Fernet.generate_key()
 SECRET_KEY = Fernet(key).encrypt(bytes(str(uuid4()), encoding="utf-8"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    "one-time-secret-share.herokuapp.com",
     "127.0.0.1",
     "localhost",
-    ".ngrok-free.app",
-    ".ngrok.app",
+    "secret.ngrok.dev",
     ".dind.io",
 ]
 
@@ -159,7 +158,7 @@ SECURE_HSTS_PRELOAD = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 5 * 60
 SESSION_SAVE_EVERY_REQUEST = True
-SESSION_COOKIE_DOMAIN = "one-time-secret-share.herokuapp.com"
+SESSION_COOKIE_DOMAIN = "secret.ngrok.dev"
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_NAME = "__Secure-sessionid"
@@ -182,7 +181,7 @@ CSP_BLOCK_ALL_MIXED_CONTENT = True
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://one-time-secret-share.herokuapp.com",
+    "https://secret.ngrok.dev",
 ]
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
@@ -192,7 +191,7 @@ CSRF_COOKIE_NAME = "__Secure-csrftoken"
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    "https://one-time-secret-share.herokuapp.com",
+    "https://secret.ngrok.dev",
     "http://127.0.0.1:8000",
 ]
 CORS_PREFLIGHT_MAX_AGE = 1 if DEBUG else 60
