@@ -5,6 +5,9 @@
 
 --------
 
+> IMPORTANT: the Flask implementation of this project is experimental.
+> Django implementation is production ready.
+
 > Live demo got A+ from SecurityHeaders:
 > 
 > https://securityheaders.com/?q=https%3A%2F%2Fone-time-secret-share.herokuapp.com%2F&followRedirects=on
