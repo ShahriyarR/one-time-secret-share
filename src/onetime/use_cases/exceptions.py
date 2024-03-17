@@ -1,7 +1,7 @@
-class UUIDNotFoundException(Exception): ...
+class UUIDNotFoundException(Exception): ...  # noqa
 
 
-class SecretDataWasAlreadyConsumedException(Exception): ...
+class SecretDataWasAlreadyConsumedException(Exception): ...  # noqa
 
 
-class URLExpiredException(Exception): ...
+class URLExpiredException(Exception): ...  # noqa

@@ -1,6 +1,6 @@
-from .settings import *
+from onetime.entrypoints.web.app.settings import *  # noqa
 
-if DEBUG:
+if DEBUG:  # noqa
     INSTALLED_APPS = [
         "django.contrib.admin",
         "django.contrib.auth",
