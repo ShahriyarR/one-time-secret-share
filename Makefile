@@ -59,6 +59,7 @@ type-check:
 
 secure:
 	${PYTHON} -m bandit -r src --config pyproject.toml
+	pip-audit .
 
 run:
 	cd src/onetime/entrypoints/web/; gunicorn --reload --workers=1 app.wsgi
