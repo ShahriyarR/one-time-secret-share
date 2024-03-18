@@ -38,6 +38,7 @@ dev = [
     "pre-commit >=2.21.0",
     "pytype >= 2022.12.15",
     "bandit >= 1.7.5",
+    "pip-audit",
     "flake8-bugbear >= 22.12.6",
     "django-debug-toolbar",
     "django-browser-reload",
